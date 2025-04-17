@@ -1,4 +1,4 @@
-FROM nvidia/cuda:11.3.0-runtime-ubuntu20.04
+FROM nvidia/cuda:11.3.1-runtime-ubuntu20.04
 WORKDIR /workspace
 
 # python, dependencies for mujoco-py, from https://github.com/openai/mujoco-py
