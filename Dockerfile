@@ -32,8 +32,17 @@ RUN mkdir -p /root/.mujoco \
 ENV LD_LIBRARY_PATH /root/.mujoco/mujoco210/bin:${LD_LIBRARY_PATH}
 
 # installing poetry & env setup, mujoco_py compilation
+# 修改为
 COPY requirements/requirements.txt requirements.txt
+# 先安装较低版本的Cython
+RUN pip install Cython==0.29.32
+# 安装要求的typing-extensions版本
+RUN pip install typing-extensions\<4.6.0
+# 然后安装其他依赖
 RUN pip install -r requirements.txt
+# 如果仍有问题，尝试重新安装mujoco_py
+RUN pip uninstall -y mujoco_py && pip install mujoco_py==2.1.2.14 --no-cache-dir
+# 测试导入
 RUN python -c "import mujoco_py"
 
 COPY . /workspace/CORL/
